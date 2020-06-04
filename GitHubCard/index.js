@@ -1,8 +1,22 @@
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
-    https://api.github.com/users/<your name>
+    https://api.github.com/users/laurenemick
 */
+let userObj = {}
+
+axios.get('https://api.github.com/users/laurenemick')
+.then(response => {
+  userObj = response.data
+  console.log(response.data)
+
+  const user1 = getUsers(userObj)
+  cards.appendChild(user1)
+})
+.catch(error => {
+  console.log(error)
+})
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -58,3 +72,52 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+const cards = document.querySelector('.cards') 
+
+function getUsers(user) {
+
+  const card = document.createElement('div')
+  const image = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const name = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const profileLink = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  name.classList.add('name')
+  username.classList.add('username')
+  
+  image.src = user.avatar_url
+  name.textContent = `Name: ${user.name}`
+  username.textContent = `Username: ${user.login}`
+  location.textContent = `Location: ${user.location}`
+  profile.textContent = `Profile: ${profileLink}`
+  profileLink.innerHTML = user.html_url
+  profileLink.href = user.html_url
+  followers.textContent = `Followers: ${user.followers}`
+  following.textContent = `Following: ${user.following}`
+  bio.textContent = `Bio: ${user.bio}`
+
+  card.appendChild(image)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  profile.appendChild(profileLink)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  return card
+}
+
+
+
